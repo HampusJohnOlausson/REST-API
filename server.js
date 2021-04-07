@@ -1,6 +1,6 @@
-import Movies from "./movies.js";
+import movies from "../public/movies.js";
+import express from "express";
 
-const express = require('express');
 const app = express();
 const port = 3000;
 
@@ -9,7 +9,7 @@ app.use(express.json());
 
 //Endpoints
 app.get("/api/movies/:id", (req, res) => {
-    res.json(Movies.find((movie) => {
+    res.json(movies.find((movie) => {
         return req.params.id === movie.id;
     }))
 });
