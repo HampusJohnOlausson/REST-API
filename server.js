@@ -7,32 +7,34 @@ const port = process.env.PORT || 3000;
 const movies = [
     {
         id: 1,
-        title: 'Pans Labyrinth',
-        director: 'Guillermo Del Toro'
+        title: 'Pans Labyrinth'
     },
     {
         id: 2,
-        title: 'Blue Valentine',
-        director: 'Derek Cianfrance'
+        title: 'Blue Valentine'
+      
     },
     {
         id: 3,
-        title: 'Gladiator',
-        director: 'Ridley Scott'
+        title: 'Gladiator'
+
     },
     {
         id: 4,
-        title: 'Eternal sunshine of the spotless mind',
-        director: 'Michel Gondry'
+        title: 'Eternal sunshine of the spotless mind'
+
     }
 ];
+
+//connect to client map 
+app.use(express.static('./public'));
 
 //Parsing
  app.use(express.json());
 
 //Endpoints
 
-//Get list of all movie objects
+//----------Get list of all movie objects
 app.get('/api/movies', (req, res) => {
     if(!movies){
         res.status(404).send('The list of movies was not found!');
@@ -40,7 +42,7 @@ app.get('/api/movies', (req, res) => {
     res.send(movies);
 })
 
-//Get a specifik movie by id
+//----------Get a specifik movie by id
 app.get('/api/movies/:id', (req, res) => {
     const movie = movies.find(m => m.id === parseInt(req.params.id));
     if(!movie){
@@ -49,7 +51,7 @@ app.get('/api/movies/:id', (req, res) => {
     res.send(movie);
 });
 
-//Post a new movie into the list
+//----------Post a new movie into the list
 app.post('/api/movies', (req, res) => {
 
     if(!req.body.title){
@@ -77,13 +79,8 @@ app.post('/api/movies', (req, res) => {
 });
 
 
-//Starting the server
+//----------Starting the server
 app.listen(port, () => {
     console.log(`Server is running on port http://localhost:${port}`);
 });
 
-// res.json(
-//   movies.find((movie) => {
-//     return req.params.id === movie.id;
-//   })
-// );
