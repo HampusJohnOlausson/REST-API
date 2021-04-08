@@ -8,7 +8,7 @@ const movies = [
     {
         id: 1,
         title: 'Pans Labyrinth',
-        Director: 'Guillermo Del Toro'
+        director: 'Guillermo Del Toro'
     },
     {
         id: 2,
@@ -34,14 +34,16 @@ const movies = [
 
 //Get list of all movie objects
 app.get('/api/movies/', (req, res) => {
+    if(!movies){
+        res.status(404).send('The list of movies was not found!');
+    }
     res.send(movies);
 })
 
 //Get a specifik movie by id
 app.get('/api/movies/:id', (req, res) => {
-    const movie = movies.find(m => {
-        return req.params.id === m.id;
-    });
+    const movie = movies.find(m => m.id === parseInt(req.params.id));
+    res.send(movie);
     if(!movie){
          res.status(404).send('The movie was not found!');
     }
@@ -50,17 +52,19 @@ app.get('/api/movies/:id', (req, res) => {
 //Post a new movie into the list
 app.post('/api/movies/:id', (req, res) => {
 
-    if(!req.body.title){
-        res.status(400).send('Title of movie is required!');
-        return 
+    if(!req.body.title && !req.body.director){
+        res.status(400).send('Title and director of movie is required!');
+        return;
     }
     const movie = {
-        id: id + 1,
-        title: req.body.title
+        id: movies.length + 1,
+        title: req.body.title,
+        director: req.body.director
     };
+    // const updateMovieList = {...movies, movie};
     movies.push(movie);
-    res.send(course);
-})
+    res.send(movie);
+});
 
 
 
