@@ -55,24 +55,25 @@ app.post('/api/movies', (req, res) => {
         res.status(400).send('Title of movie is required!');
     }
 
-    const titleToSave = req.body.title;
+    const newTitle = req.body.title;
 
-    let idToSave = 0;
+    let newId = 0;
 
     movies.forEach(title => {
-        if(title.id > idToSave){
-            idToSave = title.id;
+        if(title.id > newId){
+            newId = title.id;
         }
     })
-    idToSave++
+    newId++
 
     movies.push({
-        id: idToSave,
-        title: titleToSave
+        id: newId,
+        title: newTitle
     })
     res.json({
         status: "A new movie was added!"
     })
+
 });
 
 //-------PUT
