@@ -33,7 +33,7 @@ const movies = [
 //Endpoints
 
 //Get list of all movie objects
-app.get('/api/movies/', (req, res) => {
+app.get('/api/movies', (req, res) => {
     if(!movies){
         res.status(404).send('The list of movies was not found!');
     }
@@ -43,29 +43,38 @@ app.get('/api/movies/', (req, res) => {
 //Get a specifik movie by id
 app.get('/api/movies/:id', (req, res) => {
     const movie = movies.find(m => m.id === parseInt(req.params.id));
-    res.send(movie);
     if(!movie){
          res.status(404).send('The movie was not found!');
     }
-});
-
-//Post a new movie into the list
-app.post('/api/movies/:id', (req, res) => {
-
-    if(!req.body.title && !req.body.director){
-        res.status(400).send('Title and director of movie is required!');
-        return;
-    }
-    const movie = {
-        id: movies.length + 1,
-        title: req.body.title,
-        director: req.body.director
-    };
-    // const updateMovieList = {...movies, movie};
-    movies.push(movie);
     res.send(movie);
 });
 
+//Post a new movie into the list
+app.post('/api/movies', (req, res) => {
+
+    if(!req.body.title){
+        res.status(400).send('Title of movie is required!');
+    }
+
+    const titleToSave = req.body.title;
+
+    let idToSave = 0;
+
+    movies.forEach(title => {
+        if(title.id > idToSave){
+            idToSave = title.id;
+        }
+    })
+    idToSave++
+
+    movies.push({
+        id: idToSave,
+        title: titleToSave
+    })
+    res.json({
+        status: "A new movie was added!"
+    })
+});
 
 
 //Starting the server
