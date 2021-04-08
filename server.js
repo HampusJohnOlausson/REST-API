@@ -12,21 +12,18 @@ const movies = [
     {
         id: 2,
         title: 'Blue Valentine'
-      
     },
     {
         id: 3,
         title: 'Gladiator'
-
     },
     {
         id: 4,
         title: 'Eternal sunshine of the spotless mind'
-
     }
 ];
 
-//connect to client map 
+//connect to public map 
 app.use(express.static('./public'));
 
 //Parsing
@@ -78,6 +75,22 @@ app.post('/api/movies', (req, res) => {
     })
 });
 
+//-------PUT
+
+app.put('/api/movies/:id', (req, res) => {
+    const movie = movies.find((m) => m.id === parseInt(req.params.id));
+    if (!movie) {
+      res.status(404).send("The movie was not found!");
+    }
+
+    movie.title = req.body.name;
+    res.send(movie);
+});
+
+//-------DELETE
+app.delete('/api/movies/:id', (req, res) => {
+    
+});
 
 //----------Starting the server
 app.listen(port, () => {

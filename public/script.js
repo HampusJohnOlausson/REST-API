@@ -1,4 +1,6 @@
 window.addEventListener('load', main);
 
-function main(){}
+function main(){
+    console.log('test');
+}
 
