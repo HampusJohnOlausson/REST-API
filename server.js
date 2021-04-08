@@ -89,7 +89,10 @@ app.put('/api/movies/:id', (req, res) => {
 
 //-------DELETE
 app.delete('/api/movies/:id', (req, res) => {
-    
+    const movie = movies.find((m) => m.id === parseInt(req.params.id));
+    const deleteMovie = movies.splice(movie, 1);
+    res.send(deleteMovie);
+
 });
 
 //----------Starting the server
