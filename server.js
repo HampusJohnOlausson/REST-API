@@ -1,9 +1,9 @@
-
-import express from "express";
+import express, { response } from "express";
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
+//Movie Data
 const movies = [
     {
         id: 1,
@@ -28,14 +28,49 @@ const movies = [
 ];
 
 //Parsing
-app.use(express.json());
+ app.use(express.json());
 
 //Endpoints
-app.get("/api/movies/:id", (req, res) => {
-    res.send(movies)
+
+//Get list of all movie objects
+app.get('/api/movies/', (req, res) => {
+    res.send(movies);
+})
+
+//Get a specifik movie by id
+app.get('/api/movies/:id', (req, res) => {
+    const movie = movies.find(m => {
+        return req.params.id === m.id;
+    });
+    if(!movie){
+         res.status(404).send('The movie was not found!');
+    }
 });
+
+//Post a new movie into the list
+app.post('/api/movies/:id', (req, res) => {
+
+    if(!req.body.title){
+        res.status(400).send('Title of movie is required!');
+        return 
+    }
+    const movie = {
+        id: id + 1,
+        title: req.body.title
+    };
+    movies.push(movie);
+    res.send(course);
+})
+
+
 
 //Starting the server
 app.listen(port, () => {
     console.log(`Server is running on port http://localhost:${port}`);
 });
+
+// res.json(
+//   movies.find((movie) => {
+//     return req.params.id === movie.id;
+//   })
+// );
