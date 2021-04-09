@@ -1,6 +1,13 @@
 window.addEventListener('load', main);
 
-function main(){
+async function main(){
     console.log('test');
 }
 
+function getMovies(){
+    
+}
+
+function addMovie(){
+
+}

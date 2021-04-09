@@ -53,26 +53,31 @@ app.get('/api/movies/:id', (req, res) => {
 //----------Post method (add new movie into the list)---------
 app.post('/api/movies', (req, res) => {
 
-    //validation if title exist or not
-    if(!req.body.title)
-       return res.status(400).send('Title of movie is required!');
+  const newTitle = req.body.title;
 
-    let newId = 0;
+  //validation if title exist or not
+  if (!req.body.title)
+    return res.status(400).send("Title of movie is required!");
 
-    movies.forEach(title => {
-        if(title.id > newId){
-            newId = title.id;
-        }
-    })
-    newId++
+  let newId = 0;
+  //finding the biggest id and
+  //if movie.id is bigger than the newId than replace newId with the biggest id
+  movies.forEach((movie) => {
+    if (movie.id > newId) {
+      newId = movie.id;
+    }
+  });
+  //than add 1 to get a new unique id
+  newId++;
 
-    movies.push({
-        id: newId,
-        title: newTitle
-    })
-    res.json({
-        status: "A new movie was added!"
-    })
+  movies.push({
+    id: newId,
+    title: newTitle,
+  });
+
+  res.json({
+    status: "A new movie was added!",
+  });
 
 });
 
