@@ -6,22 +6,30 @@ const port = process.env.PORT || 3000;
 
 //Movie Data
 const movies = [
-    {
-        id: 1,
-        title: 'Pans Labyrinth'
-    },
-    {
-        id: 2,
-        title: 'Blue Valentine'
-    },
-    {
-        id: 3,
-        title: 'Gladiator'
-    },
-    {
-        id: 4,
-        title: 'Eternal sunshine of the spotless mind'
-    }
+  {
+    id: 1,
+    title: "Pans Labyrinth",
+    year: 2006,
+    director: "Guillermo del Toro",
+  },
+  {
+    id: 2,
+    title: "Blue Valentine",
+    year: 2010,
+    director: "Derek Cianfrance",
+  },
+  {
+    id: 3,
+    title: "Gladiator",
+    year: 2000,
+    director: "Ridley Scott",
+  },
+  {
+    id: 4,
+    title: "Eternal sunshine of the spotless mind",
+    year: 2004,
+    director: "Michel Gondry",
+  },
 ];
 
 
@@ -54,10 +62,12 @@ app.get('/api/movies/:id', (req, res) => {
 app.post('/api/movies', (req, res) => {
 
   const newTitle = req.body.title;
+  const newYear = req.body.year;
+  const newDirector = req.body.director;
 
   //validation if title exist or not
-  if (!req.body.title)
-    return res.status(400).send("Title of movie is required!");
+  if (!newTitle || !newYear || !newDirector )
+    return res.status(400).send("Title, year and director of movie is required!");
 
   let newId = 0;
   //finding the biggest id and
@@ -73,6 +83,8 @@ app.post('/api/movies', (req, res) => {
   movies.push({
     id: newId,
     title: newTitle,
+    year: newYear,
+    director: newDirector
   });
 
   res.json({
@@ -88,11 +100,13 @@ app.put('/api/movies/:id', (req, res) => {
   if (!movie) return res.status(404).send("The movie was not found!");
 
   //validation if title exist or not
-  if (!req.body.title)
-    return res.status(400).send("Title of movie is required");
+  if (!req.body.title || !req.body.year || !req.body.director)
+    return res.status(400).send("Title, year and director of movie is required");
 
   //updating the movie object  
   movie.title = req.body.name;
+  movie.year = req.body.year;
+  movie.director = req.body.director;
   //return the updated object
   res.send(movie);
 });
