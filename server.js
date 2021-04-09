@@ -32,11 +32,11 @@ const movies = [
   },
 ];
 
-
+//Middleware, that makes the public folder accessable
 app.use(express.static('./public'));
 
-//Middleware, Parsing for body 
- app.use(express.json());
+//Middleware, makes body is parsed to json 
+app.use(express.json());
 
 //Endpoints
 
