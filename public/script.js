@@ -1,8 +1,17 @@
 window.addEventListener('load', main);
 
 async function main(){ 
-    const allMovies = await getAllMovies();
-    console.log(allMovies);
+
+    const viewMoviesBtn = document.getElementById('viewAll');
+    
+    viewMoviesBtn.addEventListener('click', async function love() {
+        const allMovies = await getAllMovies();
+        console.log(allMovies);
+
+        const movieContainer = document.getElementById('container');
+        movieContainer.innerText = allMovies;
+    });
+
     const specificMovie =  await getSpecificMovie(2);
     console.log(specificMovie);
     //const addMovie = await addNewMovie('lotr');
@@ -12,6 +21,7 @@ async function main(){
 }
 
 async function getAllMovies(){
+
     const movies = await makeRequest('/api/movies', 'GET')
     return movies;
 }
@@ -43,7 +53,6 @@ async function makeRequest(url, method, body){
         }
     })
     
-
     const result = await response.json();
     console.log(response);
     return result;
