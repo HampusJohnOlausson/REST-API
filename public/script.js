@@ -1,29 +1,36 @@
 window.addEventListener('load', main);
 
-function main(){ 
-    getAllMovies();
-    getSpecificMovie(2);
-    addNewMovie('lotr');
+async function main(){ 
+    const allMovies = await getAllMovies();
+    console.log(allMovies);
+    const specificMovie =  await getSpecificMovie(2);
+    console.log(specificMovie);
+    //const addMovie = await addNewMovie('lotr');
+    //console.log(addMovie);
+    //const removeMovie = await removeMovie(3);
+    //console.log(removeMovie);
 }
 
 async function getAllMovies(){
     const movies = await makeRequest('/api/movies', 'GET')
-    console.log(movies)
+    return movies;
 }
 
 async function getSpecificMovie(id){
-    const movies = await makeRequest('/api/movies/:id', 'GET')
+    const movies = await makeRequest('/api/movies/' + id, 'GET')
+    return movies;
 }
 
 async function addNewMovie(title){
-    const body = { title: "lotr", year: 2001, director: "Peter Jackson"};
-
+    const body = { title: title, year: year, director: director};
     const status = await makeRequest('/api/movies', 'POST', body)
-    console.log(status);
+    return status;
 }
 
-async function removeMovie(){
-    const movies = await makeRequest('/api/movies/:id', )
+async function removeMovie(id){
+    const body = { title: title, year: year, director: director};
+    const movies = await makeRequest('/api/movies/' + id, 'DELETE', body)
+    return movies;
 }
 
 async function makeRequest(url, method, body){
@@ -35,9 +42,9 @@ async function makeRequest(url, method, body){
             'Content-Type': 'application/json'
         }
     })
-    console.log(response)
+    
 
     const result = await response.json();
-
+    console.log(response);
     return result;
 }
