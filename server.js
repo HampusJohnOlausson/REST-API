@@ -31,7 +31,7 @@ app.use(express.static('./public'));
 
 //Endpoints
 
-//----------Get list of all movie objects
+//----------Get method (list of all movie objects)---------
 app.get('/api/movies', (req, res) => {
     if(!movies){
         res.status(404).send('The list of movies was not found!');
@@ -39,7 +39,7 @@ app.get('/api/movies', (req, res) => {
     res.send(movies);
 })
 
-//----------Get a specifik movie by id
+//----------Get method (a specifik movie by id)----------
 app.get('/api/movies/:id', (req, res) => {
     const movie = movies.find(m => m.id === parseInt(req.params.id));
     if(!movie){
@@ -48,7 +48,7 @@ app.get('/api/movies/:id', (req, res) => {
     res.send(movie);
 });
 
-//----------Post a new movie into the list
+//----------Post method (add new movie into the list)---------
 app.post('/api/movies', (req, res) => {
 
     if(!req.body.title){
@@ -76,22 +76,26 @@ app.post('/api/movies', (req, res) => {
 
 });
 
-//-------PUT
-
+//-------PUT method (updating a specifik object)-------
 app.put('/api/movies/:id', (req, res) => {
+
     const movie = movies.find((m) => m.id === parseInt(req.params.id));
-    if (!movie) {
-      res.status(404).send("The movie was not found!");
-    }
+    if (!movie) return res.status(404).send("The movie was not found!");
+
+    if(!req.body.title)
+        return res.status(400).send('Title of movie is required');
 
     movie.title = req.body.name;
     res.send(movie);
 });
 
-//-------DELETE
+//-------DELETE method (delete specifik movie)-------
 app.delete('/api/movies/:id', (req, res) => {
     const movie = movies.find((m) => m.id === parseInt(req.params.id));
-    const deleteMovie = movies.splice(movie, 1);
+    if (!movie) return res.status(404).send("The movie was not found!");
+    //find index of the specific movie to delete
+    const index = movies.indexOf(movie);
+    const deleteMovie = movies.splice(index, 1);
     res.send(deleteMovie);
 
 });
