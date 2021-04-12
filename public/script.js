@@ -8,19 +8,22 @@ async function main(){
         console.log(...allMovies);
     })
 
-    const showSpecificMovie = await document.getElementById('viewSpecific');
+    const showSpecificMovie = document.getElementById('viewSpecific');
     showSpecificMovie.addEventListener('click', async () => {
+
         const specificMovie = await getSpecificMovie(2);
         console.log(specificMovie);
     })
 
-    
-    // const specificMovie =  await getSpecificMovie(2);
-    // console.log(specificMovie);
     //const addMovie = await addNewMovie('lotr');
     //console.log(addMovie);
-    //const removeMovie = await removeMovie(3);
-    //console.log(removeMovie);
+
+    const deleteMovieBtn = document.getElementById("deleteSpecific");
+    deleteMovieBtn.addEventListener('click', async () => {
+
+        const deleteMovie = await removeMovie(3);
+        console.log(deleteMovie);
+    })
 }
 
 async function getAllMovies(){
@@ -50,8 +53,11 @@ async function addNewMovie(title){
 }
 
 async function removeMovie(id){
-    const body = { title: title, year: year, director: director};
-    const movies = await makeRequest('/api/movies/' + id, 'DELETE', body)
+
+    const body = { title: lotr, year: year, director: director};
+    const movies = await makeRequest('/api/movies/' + id, 'DELETE', body);
+    // const deletedMovie = document.getElementById("deleted-movie");
+    // deletedMovie.innerText = body.title;
     return movies;
 }
 

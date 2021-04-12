@@ -1,4 +1,4 @@
-import express, { response } from "express";
+import express from "express";
 
 const app = express();
 //Use environment variable Port otherwise port 3000
@@ -45,7 +45,7 @@ app.get('/api/movies', (req, res) => {
 
     if(!movies)
       return res.status(404).send('The list of movies was not found!');
-    
+
     res.send(movies);
 })
 
@@ -54,7 +54,6 @@ app.get('/api/movies/:id', (req, res) => {
 
     const movie = movies.find(m => m.id === parseInt(req.params.id));
     if(!movie) return res.status(404).send('The movie was not found!');
-
     res.send(movie);
 });
 
@@ -91,6 +90,8 @@ app.post('/api/movies', (req, res) => {
     status: "A new movie was added!",
   });
 
+  res.send(movies);
+
 });
 
 //-------PUT method (updating a specifik object)-------
@@ -118,8 +119,8 @@ app.delete('/api/movies/:id', (req, res) => {
     if (!movie) return res.status(404).send("The movie was not found!");
     //find index of the specific movie to delete
     const index = movies.indexOf(movie);
-    const deleteMovie = movies.splice(index, 1);
-    res.send(deleteMovie);
+    movies.splice(index, 1);
+    res.send(movie);
 
 });
 
