@@ -4,39 +4,15 @@ const app = express();
 //Use environment variable Port otherwise port 3000
 const port = process.env.PORT || 3000;
 
-//Movie Data
-const movies = [
-  {
-    id: 1,
-    title: "Pans Labyrinth",
-    year: 2006,
-    director: "Guillermo del Toro",
-  },
-  {
-    id: 2,
-    title: "Blue Valentine",
-    year: 2010,
-    director: "Derek Cianfrance",
-  },
-  {
-    id: 3,
-    title: "Gladiator",
-    year: 2000,
-    director: "Ridley Scott",
-  },
-  {
-    id: 4,
-    title: "Eternal sunshine of the spotless mind",
-    year: 2004,
-    director: "Michel Gondry",
-  },
-];
-
-//Middleware, that makes the public folder accessable
-app.use(express.static('./public'));
+import fs from 'fs';
+const data = fs.readFileSync('movieList.json');
+let movies = JSON.parse(data);
 
 //Middleware, makes body is parsed to json 
 app.use(express.json());
+
+//Middleware, that makes the public folder accessable
+app.use(express.static('./public'));
 
 //Endpoints
 
@@ -46,7 +22,7 @@ app.get('/api/movies', (req, res) => {
     if(!movies)
       return res.status(404).send('The list of movies was not found!');
 
-    res.send(movies);
+    res.json(movies);
 })
 
 //----------Get method (a specifik movie by id)----------
@@ -54,7 +30,7 @@ app.get('/api/movies/:id', (req, res) => {
 
     const movie = movies.find(m => m.id === parseInt(req.params.id));
     if(!movie) return res.status(404).send('The movie was not found!');
-    res.send(movie);
+    res.json(movie);
 });
 
 //----------Post method (add new movie into the list)---------

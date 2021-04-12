@@ -29,9 +29,23 @@ async function main(){
 async function getAllMovies(){
 
     const movies = await makeRequest("/api/movies", "GET");
-    const movieContainer = document.getElementById("movie-container");
-    movieContainer.innerHTML = movies;
-    return movies;
+
+    for(movie of movies){
+
+      const titles = document.createElement('h2');
+      titles.innerText = movie.title;
+      
+      const years = document.createElement('h4');
+      years.innerText = movie.year;
+
+      const directors = document.createElement('h3');
+      directors.innerText = movie.director;
+
+      const movieContainer = document.getElementById("movie-container");
+       movieContainer.appendChild(titles);
+       movieContainer.appendChild(years);
+       movieContainer.appendChild(directors);
+    }
 }
 
 async function getSpecificMovie(id){
