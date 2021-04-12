@@ -2,18 +2,21 @@ window.addEventListener('load', main);
 
 async function main(){ 
 
-    const viewMoviesBtn = document.getElementById('viewAll');
-    
-    viewMoviesBtn.addEventListener('click', async function love() {
+    const showMoviesBtn = document.getElementById("viewAll");
+    showMoviesBtn.addEventListener('click', async () => {
         const allMovies = await getAllMovies();
-        console.log(allMovies);
+        console.log(...allMovies);
+    })
 
-        const movieContainer = document.getElementById('container');
-        movieContainer.innerText = allMovies;
-    });
+    const showSpecificMovie = await document.getElementById('viewSpecific');
+    showSpecificMovie.addEventListener('click', async () => {
+        const specificMovie = await getSpecificMovie(2);
+        console.log(specificMovie);
+    })
 
-    const specificMovie =  await getSpecificMovie(2);
-    console.log(specificMovie);
+    
+    // const specificMovie =  await getSpecificMovie(2);
+    // console.log(specificMovie);
     //const addMovie = await addNewMovie('lotr');
     //console.log(addMovie);
     //const removeMovie = await removeMovie(3);
@@ -22,12 +25,21 @@ async function main(){
 
 async function getAllMovies(){
 
-    const movies = await makeRequest('/api/movies', 'GET')
+    const movies = await makeRequest("/api/movies", "GET");
+    const movieContainer = document.getElementById("movie-container");
+    movieContainer.innerHTML = movies;
     return movies;
 }
 
 async function getSpecificMovie(id){
+
     const movies = await makeRequest('/api/movies/' + id, 'GET')
+    const specificMovieContainer = document.getElementById('specific-movie');
+    specificMovieContainer.innerHTML = [
+      movies.title,
+      movies.year,
+      movies.director,
+    ];
     return movies;
 }
 
