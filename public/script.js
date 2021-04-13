@@ -7,17 +7,7 @@ async function main(){
         const allMovies = await getAllMovies();
         console.log(...allMovies);
     })
-
-    // const showSpecificMovie = document.getElementById("viewSpecific");
-    // showSpecificMovie.addEventListener("click", async () => {
-    //   const specificMovie = await getSpecificMovie(id);
-    //   console.log(specificMovie);
-    // });
-
-    const deleteMovie = await removeMovie(3);
-    console.log(deleteMovie);
     
-
     //const addMovie = await addNewMovie('lotr');
     //console.log(addMovie);
 
