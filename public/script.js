@@ -8,22 +8,19 @@ async function main(){
         console.log(...allMovies);
     })
 
-    const showSpecificMovie = document.getElementById('viewSpecific');
-    showSpecificMovie.addEventListener('click', async () => {
+    // const showSpecificMovie = document.getElementById("viewSpecific");
+    // showSpecificMovie.addEventListener("click", async () => {
+    //   const specificMovie = await getSpecificMovie(id);
+    //   console.log(specificMovie);
+    // });
 
-        const specificMovie = await getSpecificMovie(2);
-        console.log(specificMovie);
-    })
+    const deleteMovie = await removeMovie(3);
+    console.log(deleteMovie);
+    
 
     //const addMovie = await addNewMovie('lotr');
     //console.log(addMovie);
 
-    const deleteMovieBtn = document.getElementById("deleteSpecific");
-    deleteMovieBtn.addEventListener('click', async () => {
-
-        const deleteMovie = await removeMovie(3);
-        console.log(deleteMovie);
-    })
 }
 
 async function getAllMovies(){
@@ -40,24 +37,49 @@ async function getAllMovies(){
 
       const directors = document.createElement('h3');
       directors.innerText = movie.director;
+      
+      const movieId = movie.id;
+      console.log(movieId);
+
+      const deleteBtn = document.createElement('button');
+      deleteBtn.innerText = 'Delete';
+      deleteBtn.addEventListener('click', async () => {
+          const deleteMovie = await removeMovie(movieId);
+          console.log(deleteMovie);
+      })
+
+      const viewMovieBtn = document.createElement('button');
+      viewMovieBtn.innerText = 'View Movie';
+      viewMovieBtn.addEventListener('click', async () => {
+          const viewMovie = await getSpecificMovie(movieId);
+          console.log(movieId);
+      })
 
       const movieContainer = document.getElementById("movie-container");
        movieContainer.appendChild(titles);
        movieContainer.appendChild(years);
        movieContainer.appendChild(directors);
+       movieContainer.appendChild(deleteBtn);
+       movieContainer.appendChild(viewMovieBtn);
     }
 }
 
 async function getSpecificMovie(id){
 
     const movies = await makeRequest('/api/movies/' + id, 'GET')
+    const title = document.createElement('h2');
+    title.innerText = movies.title;
+
+    const year = document.createElement('h4');
+    year.innerText = movies.year;
+
+    const director = document.createElement('h3');
+    director.innerText = movies.director;
+
     const specificMovieContainer = document.getElementById('specific-movie');
-    specificMovieContainer.innerHTML = [
-      movies.title,
-      movies.year,
-      movies.director,
-    ];
-    return movies;
+    specificMovieContainer.appendChild(title);
+    specificMovieContainer.appendChild(year);
+    specificMovieContainer.appendChild(director)
 }
 
 async function addNewMovie(title){
@@ -68,10 +90,8 @@ async function addNewMovie(title){
 
 async function removeMovie(id){
 
-    const body = { title: lotr, year: year, director: director};
+    const body = { title: title, year: year, director: director};
     const movies = await makeRequest('/api/movies/' + id, 'DELETE', body);
-    // const deletedMovie = document.getElementById("deleted-movie");
-    // deletedMovie.innerText = body.title;
     return movies;
 }
 
