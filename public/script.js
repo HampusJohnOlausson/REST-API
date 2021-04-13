@@ -8,6 +8,12 @@ async function main(){
         console.log(...allMovies);
     })
 
+    const submitMovieBtn = document.getElementById('submitBtn');
+    submitMovieBtn.addEventListener('click', async () => {
+        const addMovie = await addNewMovie();
+        console.log(addMovie);
+    } )
+
 }
 
 //----------------To view all Movies--------------------
@@ -80,8 +86,16 @@ async function addNewMovie(title, year, director){
 
     const form = document.getElementById('form');
     console.log(form);
-    const body = { title: title, year: year, director: director};
+    const body = { title: title, year: year, director: director };
+    const newMovie = { title: title, year: year, director: director };
+
     const status = await makeRequest('/api/movies', 'POST', body)
+    const movieContainer = document.getElementById("movie-container");
+    const li = document.createElement('li');
+    li.appendChild(document.createTextNode(JSON.stringify(newMovie)));
+    movieContainer.appendChild(li);
+    console.log(newMovie);
+    console.log(status);
     return status;
 }
 

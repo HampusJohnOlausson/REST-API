@@ -4,7 +4,7 @@ const app = express();
 //Use environment variable Port otherwise port 3000
 const port = process.env.PORT || 3000;
 
-import fs from 'fs';
+import fs, { readFile } from 'fs';
 const data = fs.readFileSync('movieList.json');
 let movies = JSON.parse(data);
 
@@ -35,14 +35,15 @@ app.get('/api/movies/:id', (req, res) => {
 
 //----------Post method (add new movie into the list)---------
 app.post('/api/movies', (req, res) => {
+  fs.readFile("./movieList.json", (err, data) => {
+    data = fs.readFileSync("./movieList.json");
+    const movies = JSON.parse(data);
+    if (err) {
+      return status(404).json({ msg: "An error accurred" });
+    }
+  });
 
-  const newTitle = req.body.title;
-  const newYear = req.body.year;
-  const newDirector = req.body.director;
-
-  //validation if title exist or not
-  if (!newTitle || !newYear || !newDirector )
-    return res.status(400).send("Title, year and director of movie is required!");
+  const movie = req.body;
 
   let newId = 0;
   //finding the biggest id and
@@ -55,11 +56,24 @@ app.post('/api/movies', (req, res) => {
   //than add 1 to get a new unique id
   newId++;
 
-  movies.push({
+  const newMovie = {
     id: newId,
-    title: newTitle,
-    year: newYear,
-    director: newDirector
+    title: movie.title,
+    year: movie.year,
+    director: movie.director,
+  };
+
+  //validation
+  if (!movie.title || !movie.year || !movie.director)
+    return res
+      .status(400)
+      .send("Title, year and director of movie is required!");
+
+  movies.push(newMovie);
+  fs.writeFile("./movieList", JSON.stringify(movies, null, 2), (err) => {
+    if (err) {
+      return res.json({ msg: "An error accured" });
+    }
   });
 
   res.json({
@@ -67,7 +81,6 @@ app.post('/api/movies', (req, res) => {
   });
 
   res.send(movies);
-
 });
 
 //-------PUT method (updating a specifik object)-------
