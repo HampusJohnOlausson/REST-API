@@ -7,12 +7,10 @@ async function main(){
         const allMovies = await getAllMovies();
         console.log(...allMovies);
     })
-    
-    //const addMovie = await addNewMovie('lotr');
-    //console.log(addMovie);
 
 }
 
+//----------------To view all Movies--------------------
 async function getAllMovies(){
 
     const movies = await makeRequest("/api/movies", "GET");
@@ -35,14 +33,14 @@ async function getAllMovies(){
       deleteBtn.innerText = 'Delete';
       deleteBtn.addEventListener('click', async () => {
           const deleteMovie = await removeMovie(movieId);
-          console.log(deleteMovie);
+          console.log(deleteMovie.id);
       })
 
       const viewMovieBtn = document.createElement('button');
       viewMovieBtn.innerText = 'View Movie';
       viewMovieBtn.addEventListener('click', async () => {
           const viewMovie = await getSpecificMovie(movieId);
-          console.log(movieId);
+          console.log(viewMovie.id);
       })
 
       const movieContainer = document.getElementById("movie-container");
@@ -52,8 +50,11 @@ async function getAllMovies(){
        movieContainer.appendChild(deleteBtn);
        movieContainer.appendChild(viewMovieBtn);
     }
+
+    return movies;
 }
 
+//------------To view a specific movie--------------
 async function getSpecificMovie(id){
 
     const movies = await makeRequest('/api/movies/' + id, 'GET')
@@ -70,32 +71,37 @@ async function getSpecificMovie(id){
     specificMovieContainer.appendChild(title);
     specificMovieContainer.appendChild(year);
     specificMovieContainer.appendChild(director)
+
+    return movies;
 }
 
-async function addNewMovie(title){
+//--------------To add a new movie to the list------------
+async function addNewMovie(title, year, director){
+
+    const form = document.getElementById('form');
+    console.log(form);
     const body = { title: title, year: year, director: director};
     const status = await makeRequest('/api/movies', 'POST', body)
     return status;
 }
 
-async function removeMovie(id){
-
-    const body = { title: title, year: year, director: director};
-    const movies = await makeRequest('/api/movies/' + id, 'DELETE', body);
-    return movies;
+//-------------To delete a movie from the list------------
+async function removeMovie(title, year, director, id) {
+  const body = { title: title, year: year, director: director };
+  const movies = await makeRequest("/api/movies/" + id, 'DELETE', body);
+  return movies;
 }
 
 async function makeRequest(url, method, body){
 
     const response = await fetch(url, {
         method: method,
-        body: body,
+        body: JSON.stringify(body),
         headers: {
             'Content-Type': 'application/json'
         }
     })
     
     const result = await response.json();
-    console.log(response);
     return result;
 }
