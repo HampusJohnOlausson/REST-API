@@ -6,12 +6,6 @@
     "director": "Guillermo del Toro"
   },
   {
-    "id": 2,
-    "title": "Blue Valentine",
-    "year": 2010,
-    "director": "Derek Cianfrance"
-  },
-  {
     "id": 3,
     "title": "Gladiator",
     "year": 2000,
@@ -22,5 +16,11 @@
     "title": "Eternal sunshine of the spotless mind",
     "year": 2004,
     "director": "Michel Gondry"
+  },
+  {
+    "id": 5,
+    "title": "Fellowship of the ring",
+    "year": 2001,
+    "director": "Peter Jackson"
   }
 ]

@@ -104,12 +104,13 @@ app.put('/api/movies/:id', (req, res) => {
 //-------DELETE method (delete specifik movie)-------
 app.delete('/api/movies/:id', (req, res) => {
 
-    const movie = movies.find((m) => m.id === parseInt(req.params.id));
-    if (!movie) return res.status(404).send("The movie was not found!");
-    //find index of the specific movie to delete
-    const index = movies.indexOf(movie);
-    movies.splice(index, 1);
-    res.send(movie);
+    const movieId = req.params.id;
+    movies = movies.filter((movie) => movie.id !== parseInt(movieId));
+    const data = JSON.stringify(movies, null, 2);
+    fs.writeFile("movieList.json", data, (err) => {
+      if (err) throw err;
+      res.status(200).json(`was deleted`);
+    });
 
 });
 
