@@ -1,40 +1,33 @@
 import express from "express";
-
+import fs, { readFile } from "fs";
 const app = express();
-//Use environment variable Port otherwise port 3000
 const port = process.env.PORT || 3000;
-
-import fs, { readFile } from 'fs';
 const data = fs.readFileSync('movieList.json');
 let movies = JSON.parse(data);
 
 //Middleware, makes body is parsed to json 
 app.use(express.json());
-
-//Middleware, that makes the public folder accessable
 app.use(express.static('./public'));
 
 //Endpoints
-
-//----------Get method (list of all movie objects)---------
 app.get('/api/movies', (req, res) => {
 
-    if(!movies)
-      return res.status(404).send('The list of movies was not found!');
+    if(!movies) return res.status(404).json('The list of movies was not found!');
 
     res.json(movies);
 })
 
-//----------Get method (a specifik movie by id)----------
 app.get('/api/movies/:id', (req, res) => {
 
-    const movie = movies.find(m => m.id === parseInt(req.params.id));
-    if(!movie) return res.status(404).send('The movie was not found!');
+    const movieId = req.params.id;
+    const movie = movies.find(m => m.id === parseInt(movieId));
+
+    if(!movie) return res.status(404).json('The movie was not found!');
     res.json(movie);
 });
 
-//----------Post method (add new movie into the list)---------
 app.post('/api/movies', (req, res) => {
+
   fs.readFile("./movieList.json", (err, data) => {
     data = fs.readFileSync("./movieList.json");
     const movies = JSON.parse(data);
@@ -63,38 +56,36 @@ app.post('/api/movies', (req, res) => {
     director: movie.director,
   };
 
-  //validation
-  if (!movie.title || !movie.year || !movie.director)
-    return res
-      .status(400)
-      .send("Title, year and director of movie is required!");
-
   movies.push(newMovie);
+
+  // //validation
+  // if (!movie.title || !movie.year || !movie.director)
+  //   return res.status(400).json("Title, year and director of movie is required!");
+
   fs.writeFile("./movieList", JSON.stringify(movies, null, 2), (err) => {
-    if (err) {
-      return res.json({ msg: "An error accured" });
-    }
+    if (err) return res.json({ msg: "An error accured" });
   });
 
   res.json({
     status: "A new movie was added!",
   });
 
-  res.send(movies);
+  res.json(movies);
 });
 
 //-------PUT method (updating a specifik object)-------
 app.put('/api/movies/:id', (req, res) => {
 
-  const movie = movies.find((m) => m.id === parseInt(req.params.id));
+  const movieId = req.params.id;
+  const movie = movies.find((m) => m.id === parseInt(movieId));
   if (!movie) return res.status(404).send("The movie was not found!");
 
-  //validation if title exist or not
-  if (!req.body.title || !req.body.year || !req.body.director)
-    return res.status(400).send("Title, year and director of movie is required");
+  // //validation if title exist or not
+  // if (!req.body.title || !req.body.year || !req.body.director)
+  //   return res.status(400).send("Title, year and director of movie is required");
 
   //updating the movie object  
-  movie.title = req.body.name;
+  movie.title = req.body.title;
   movie.year = req.body.year;
   movie.director = req.body.director;
   //return the updated object

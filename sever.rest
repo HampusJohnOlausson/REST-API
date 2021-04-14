@@ -1,10 +1,8 @@
-
-
 GET http://localhost:3000/api/movies
 
 ###
 
-GET http://localhost:3000/api/movies/2
+GET http://localhost:3000/api/movies/1
 
 ###
 
@@ -19,16 +17,16 @@ Content-Type: application/json
 
 ###
 
-PUT http://localhost:3000/api/movies/2
+PUT http://localhost:3000/api/movies/3
 Content-Type: application/json
 
 {
-    "title": "Blue Valentine",
+    "title": "Purple Valentine",
     "year": 2001,
     "director": "Gordan Ramsey"
 }
 ###
 
-DELETE http://localhost:3000/api/movies/2
+DELETE http://localhost:3000/api/movies/
 
 ###

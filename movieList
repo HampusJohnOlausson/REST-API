@@ -7,9 +7,8 @@
   },
   {
     "id": 3,
-    "title": "Gladiator",
-    "year": 2000,
-    "director": "Ridley Scott"
+    "year": 2001,
+    "director": "Gordan Ramsey"
   },
   {
     "id": 4,
@@ -19,6 +18,12 @@
   },
   {
     "id": 5,
+    "title": "Fellowship of the ring",
+    "year": 2001,
+    "director": "Peter Jackson"
+  },
+  {
+    "id": 6,
     "title": "Fellowship of the ring",
     "year": 2001,
     "director": "Peter Jackson"
