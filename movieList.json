@@ -1,26 +1,8 @@
 [
   {
-    "id": 1,
-    "title": "Pans Labyrinth",
-    "year": 2006,
-    "director": "Guillermo del Toro"
-  },
-  {
     "id": 3,
-    "year": 2001,
-    "director": "Gordan Ramsey",
-    "title": "Purple Valentine"
-  },
-  {
-    "id": 4,
-    "title": "Eternal sunshine of the spotless mind",
-    "year": 2004,
-    "director": "Michel Gondry"
-  },
-  {
-    "id": 5,
-    "title": "Fellowship of the ring",
-    "year": 2001,
-    "director": "Peter Jackson"
+    "title": "purple valentine",
+    "year": 2003,
+    "director": "Peter Smith"
   }
 ]

@@ -23,6 +23,9 @@ async function getAllMovies(){
 
     for(movie of movies){
 
+      const movieBox = document.createElement('div');
+      movieBox.classList.add('movieBox');
+
       const titles = document.createElement('h2');
       titles.innerText = movie.title;
       
@@ -36,13 +39,16 @@ async function getAllMovies(){
       console.log(movieId);
 
       const deleteBtn = document.createElement('button');
+      deleteBtn.classList.add('deleteBtn');
       deleteBtn.innerText = 'Delete';
       deleteBtn.addEventListener('click', async () => {
           const deleteMovie = await removeMovie(movieId);
+          movieBox.outerHTML = '';
           console.log(deleteMovie.id);
       })
 
       const viewMovieBtn = document.createElement('button');
+      viewMovieBtn.classList.add("viewMovieBtn");
       viewMovieBtn.innerText = 'View Movie';
       viewMovieBtn.addEventListener('click', async () => {
           const viewMovie = await getSpecificMovie(movieId);
@@ -50,11 +56,12 @@ async function getAllMovies(){
       })
 
       const movieContainer = document.getElementById("movie-container");
-       movieContainer.appendChild(titles);
-       movieContainer.appendChild(years);
-       movieContainer.appendChild(directors);
-       movieContainer.appendChild(deleteBtn);
-       movieContainer.appendChild(viewMovieBtn);
+       movieContainer.appendChild(movieBox);
+       movieBox.appendChild(titles);
+       movieBox.appendChild(years);
+       movieBox.appendChild(directors);
+       movieBox.appendChild(deleteBtn);
+       movieBox.appendChild(viewMovieBtn);
     }
 
     return movies;
@@ -74,9 +81,12 @@ async function getSpecificMovie(id){
     director.innerText = movies.director;
 
     const specificMovieContainer = document.getElementById('specific-movie');
-    specificMovieContainer.appendChild(title);
-    specificMovieContainer.appendChild(year);
-    specificMovieContainer.appendChild(director)
+    const specificMovieBox = document.createElement('div');
+    specificMovieContainer.appendChild(specificMovieBox);
+    specificMovieBox.classList.add('movieBox')
+    specificMovieBox.appendChild(title);
+    specificMovieBox.appendChild(year);
+    specificMovieBox.appendChild(director)
 
     return movies;
 }
@@ -85,25 +95,26 @@ async function getSpecificMovie(id){
 async function addNewMovie(title, year, director){
 
     const form = document.getElementById('form');
+    form.addEventListener('submit', handleForm);
+
     console.log(form);
     const body = { title: title, year: year, director: director };
     const newMovie = { title: title, year: year, director: director };
 
-    const status = await makeRequest('/api/movies', 'POST', body)
+    const movies = await makeRequest('/api/movies', 'POST', body)
     const movieContainer = document.getElementById("movie-container");
     const li = document.createElement('li');
     li.appendChild(document.createTextNode(JSON.stringify(newMovie)));
     movieContainer.appendChild(li);
     console.log(newMovie);
-    console.log(status);
-    return status;
+    console.log(movies);
+    return movies;
 }
 
 //-------------To delete a movie from the list------------
-async function removeMovie(title, year, director, id) {
-  const body = { title: title, year: year, director: director };
-  const movies = await makeRequest("/api/movies/" + id, 'DELETE', body);
-  return movies;
+async function removeMovie(id) {
+  const movie = await makeRequest("/api/movies/" + id, 'DELETE');
+  return movie;
 }
 
 async function makeRequest(url, method, body){

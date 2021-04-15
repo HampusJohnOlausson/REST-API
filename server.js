@@ -58,19 +58,15 @@ app.post('/api/movies', (req, res) => {
 
   movies.push(newMovie);
 
-  // //validation
-  // if (!movie.title || !movie.year || !movie.director)
-  //   return res.status(400).json("Title, year and director of movie is required!");
-
   fs.writeFile("./movieList", JSON.stringify(movies, null, 2), (err) => {
     if (err) return res.json({ msg: "An error accured" });
   });
 
   res.json({
-    status: "A new movie was added!",
+    status: 'A new movie was added!',
+    newMovie
   });
 
-  res.json(movies);
 });
 
 //-------PUT method (updating a specifik object)-------
@@ -97,10 +93,11 @@ app.delete('/api/movies/:id', (req, res) => {
 
     const movieId = req.params.id;
     movies = movies.filter((movie) => movie.id !== parseInt(movieId));
+    
     const data = JSON.stringify(movies, null, 2);
     fs.writeFile("movieList.json", data, (err) => {
       if (err) throw err;
-      res.status(200).json(`was deleted`);
+      res.status(200).json('was deleted');
     });
 
 });

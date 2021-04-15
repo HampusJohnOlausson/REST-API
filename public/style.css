@@ -12,8 +12,14 @@ body{
     flex-direction: column;
     align-items: center;
 }
+.movieBox{
+    border: 3px solid #28c7fa;
+    border-radius: .5rem;
+    margin: 1rem 0rem;
+    padding: 1rem;
+    text-align: center;
+}
 button{
-    background: crimson;
     padding: 1rem;
     font-size: 1.2rem;
     color: #fff;
@@ -21,13 +27,21 @@ button{
     border-radius: .5rem;
     border: none;
     width: 10rem;
-    margin: .5rem auto;
+    margin: 0 .5rem 0 0;
+}
+.viewMovieBtn{
+    background:#28c7fa;
+}
+.deleteBtn{
+    background:#ff304f;
 }
 
 #viewAll{
+    background:#28c7fa;
     margin: auto;
 }
 #submitBtn{
+    background: #22eaaa;
     margin: auto;
 }
 .hero-title{
@@ -46,6 +60,13 @@ button{
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+.specificMovieContainer{
+    border: 3px solid #28c7fa;
+    border-radius: .5rem;
+    margin: 1rem 0rem;
+    padding: 1rem;
+    text-align: center;
 }
 .specific-movie{
     display: flex;
