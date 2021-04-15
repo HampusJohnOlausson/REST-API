@@ -37,11 +37,11 @@ function addMovieForm(e){
 }
 
 
-
 //--------------To add a new movie to the list------------
 async function addNewMovie(title, year, director){
     const body = { title: title, year: year,  director: director }
     const movie = await makeRequest('api/movies', 'POST', body);
+    console.log(movieId);
     return movie;
 }
 

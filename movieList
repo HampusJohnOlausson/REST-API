@@ -1,12 +1,6 @@
 [
   {
-    "id": 3,
-    "title": "purple valentine",
-    "year": 2003,
-    "director": "Peter Smith"
-  },
-  {
-    "id": 4,
+    "id": 1,
     "title": "Fellowship of the ring",
     "year": 2001,
     "director": "Peter Jackson"

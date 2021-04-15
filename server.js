@@ -13,7 +13,6 @@ app.use(express.static('./public'));
 app.get('/api/movies', (req, res) => {
 
     if(!movies) return res.status(404).json('The list of movies was not found!');
-
     res.json(movies);
 })
 
@@ -28,43 +27,35 @@ app.get('/api/movies/:id', (req, res) => {
 
 app.post('/api/movies', (req, res) => {
 
-  fs.readFile("./movieList.json", (err, data) => {
-    data = fs.readFileSync("./movieList.json");
-    const movies = JSON.parse(data.toString());
+  if (!req.body.title || !req.body.year || !req.body.director) {
+    return res
+      .status(400)
+      .json("Title, year and director of movie is required");
+  }
 
-    if (err) {
-      return status(404).json(movies);
-    }
-  });
+    let newId = 0;
+    movies.forEach((movie) => {
+      if (movie.id > newId) {
+        newId = movie.id;
+      }
+    });
+    newId++;
 
-  let newId = 0;
-  movies.forEach((movie) => {
-    if (movie.id > newId) {
-      newId = movie.id;
-    }
-  });
-  newId++;
+    const movie = req.body;
 
-  const movie = req.body;
-  const newMovie = {
-    id: newId,
-    title: movie.title,
-    year: movie.year,
-    director: movie.director,
-  };
+    const newMovie = {
+      id: newId,
+      title: movie.title,
+      year: movie.year,
+      director: movie.director,
+    };
 
-  //validation
-  if (!req.body.title || !req.body.year || !req.body.director){
-         return res.status(400).json("Title, year and director of movie is required")
-     }
+    movies.push(newMovie);
 
-  movies.push(newMovie);
-
-  fs.writeFile("./movieList", JSON.stringify(movies, null, 2), (err) => {
-    if (err) return res.status(400)("An error accured");
-  });
-
-  res.status(201).json(newMovie.title);
+    const data = JSON.stringify(movies, null, 2)
+    fs.writeFile('movieList.json', data, () => {
+      res.status(201).json(newMovie);
+    })
 
 });
 
