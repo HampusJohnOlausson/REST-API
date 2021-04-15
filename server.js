@@ -30,25 +30,22 @@ app.post('/api/movies', (req, res) => {
 
   fs.readFile("./movieList.json", (err, data) => {
     data = fs.readFileSync("./movieList.json");
-    const movies = JSON.parse(data);
+    const movies = JSON.parse(data.toString());
+
     if (err) {
-      return status(404).json({ msg: "An error accurred" });
+      return status(404).json(movies);
     }
   });
 
-  const movie = req.body;
-
   let newId = 0;
-  //finding the biggest id and
-  //if movie.id is bigger than the newId than replace newId with the biggest id
   movies.forEach((movie) => {
     if (movie.id > newId) {
       newId = movie.id;
     }
   });
-  //than add 1 to get a new unique id
   newId++;
 
+  const movie = req.body;
   const newMovie = {
     id: newId,
     title: movie.title,
@@ -56,16 +53,18 @@ app.post('/api/movies', (req, res) => {
     director: movie.director,
   };
 
+  //validation
+  if (!req.body.title || !req.body.year || !req.body.director){
+         return res.status(400).json("Title, year and director of movie is required")
+     }
+
   movies.push(newMovie);
 
   fs.writeFile("./movieList", JSON.stringify(movies, null, 2), (err) => {
-    if (err) return res.json({ msg: "An error accured" });
+    if (err) return res.status(400)("An error accured");
   });
 
-  res.json({
-    status: 'A new movie was added!',
-    newMovie
-  });
+  res.status(201).json(newMovie.title);
 
 });
 
@@ -93,7 +92,7 @@ app.delete('/api/movies/:id', (req, res) => {
 
     const movieId = req.params.id;
     movies = movies.filter((movie) => movie.id !== parseInt(movieId));
-    
+
     const data = JSON.stringify(movies, null, 2);
     fs.writeFile("movieList.json", data, (err) => {
       if (err) throw err;
