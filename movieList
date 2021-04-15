@@ -1,26 +1,14 @@
 [
   {
-    "id": 1,
-    "title": "Pans Labyrinth",
-    "year": 2006,
-    "director": "Guillermo del Toro"
+    "id": 3,
+    "title": "purple valentine",
+    "year": 2003,
+    "director": "Peter Smith"
   },
   {
-    "id": 5,
-    "title": "Purple Valentine",
-    "year": 2001,
-    "director": "Gordan Ramsey"
-  },
-  {
-    "id": 6,
-    "title": "Fellowship of the ring",
-    "year": 2001,
-    "director": "Peter Jackson"
-  },
-  {
-    "id": 7,
-    "title": "Fellowship of the ring",
-    "year": 2001,
-    "director": "Peter Jackson"
+    "id": 4,
+    "title": "Sångare söker band",
+    "year": "11",
+    "director": "aaa"
   }
 ]

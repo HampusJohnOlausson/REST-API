@@ -20,6 +20,7 @@ body{
     text-align: center;
 }
 button{
+    cursor: pointer;
     padding: 1rem;
     font-size: 1.2rem;
     color: #fff;
@@ -35,7 +36,6 @@ button{
 .deleteBtn{
     background:#ff304f;
 }
-
 #viewAll{
     background:#28c7fa;
     margin: auto;

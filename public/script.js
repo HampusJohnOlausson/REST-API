@@ -8,12 +8,41 @@ async function main(){
         console.log(...allMovies);
     })
 
-    const submitMovieBtn = document.getElementById('submitBtn');
-    submitMovieBtn.addEventListener('click', async () => {
-        const addMovie = await addNewMovie();
-        console.log(addMovie);
-    } )
+    const newMovieForm = document.getElementById('form');
+    newMovieForm.addEventListener('submit', addMovieForm);
 
+}
+
+
+
+function addMovieForm(e){
+
+    e.preventDefault();
+
+    const titleInput = document.getElementById("title-input");
+    const titleValue = titleInput.value;
+    const yearInput = document.getElementById("year-input");
+    const yearValue = yearInput.value;
+    const directorInput = document.getElementById("director-input");
+    const directorValue = directorInput.value;
+
+    const newMovie = {
+        title: titleValue,
+        year: yearValue,
+        director: directorValue
+    };
+
+    const { title, year, director} = newMovie;
+    addNewMovie(title, year, director);
+}
+
+
+
+//--------------To add a new movie to the list------------
+async function addNewMovie(title, year, director){
+    const body = { title: title, year: year,  director: director }
+    const movie = await makeRequest('api/movies', 'POST', body);
+    return movie;
 }
 
 //----------------To view all Movies--------------------
@@ -88,26 +117,6 @@ async function getSpecificMovie(id){
     specificMovieBox.appendChild(year);
     specificMovieBox.appendChild(director)
 
-    return movies;
-}
-
-//--------------To add a new movie to the list------------
-async function addNewMovie(title, year, director){
-
-    const form = document.getElementById('form');
-    form.addEventListener('submit', handleForm);
-
-    console.log(form);
-    const body = { title: title, year: year, director: director };
-    const newMovie = { title: title, year: year, director: director };
-
-    const movies = await makeRequest('/api/movies', 'POST', body)
-    const movieContainer = document.getElementById("movie-container");
-    const li = document.createElement('li');
-    li.appendChild(document.createTextNode(JSON.stringify(newMovie)));
-    movieContainer.appendChild(li);
-    console.log(newMovie);
-    console.log(movies);
     return movies;
 }
 
