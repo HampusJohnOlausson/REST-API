@@ -13,37 +13,35 @@ async function main(){
 
 }
 
+function addMovieForm(e) {
+  e.preventDefault();
 
+  const titleInput = document.getElementById("title-input");
+  const titleValue = titleInput.value;
+  const yearInput = document.getElementById("year-input");
+  const yearValue = yearInput.value;
+  const directorInput = document.getElementById("director-input");
+  const directorValue = directorInput.value;
 
-function addMovieForm(e){
+  const newMovie = {
+    title: titleValue,
+    year: yearValue,
+    director: directorValue,
+  };
 
-    e.preventDefault();
-
-    const titleInput = document.getElementById("title-input");
-    const titleValue = titleInput.value;
-    const yearInput = document.getElementById("year-input");
-    const yearValue = yearInput.value;
-    const directorInput = document.getElementById("director-input");
-    const directorValue = directorInput.value;
-
-    const newMovie = {
-        title: titleValue,
-        year: yearValue,
-        director: directorValue
-    };
-
-    const { title, year, director} = newMovie;
-    addNewMovie(title, year, director);
+  const { title, year, director } = newMovie;
+  addNewMovie(title, year, director);
 }
 
-
-//--------------To add a new movie to the list------------
 async function addNewMovie(title, year, director){
     const body = { title: title, year: year,  director: director }
     const movie = await makeRequest('api/movies', 'POST', body);
     console.log(movieId);
     return movie;
 }
+
+
+
 
 //----------------To view all Movies--------------------
 async function getAllMovies(){
