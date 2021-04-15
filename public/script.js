@@ -82,6 +82,13 @@ async function getAllMovies(){
           console.log(viewMovie.id);
       })
 
+      const updateMovieBtn = document.createElement('button');
+      updateMovieBtn.classList.add('editBtn');
+      updateMovieBtn.innerText = 'Edit';
+      updateMovieBtn.addEventListener('click',() => {
+          handleUpdateform(movie);
+      })
+
       const movieContainer = document.getElementById("movie-container");
        movieContainer.appendChild(movieBox);
        movieBox.appendChild(titles);
@@ -89,9 +96,24 @@ async function getAllMovies(){
        movieBox.appendChild(directors);
        movieBox.appendChild(deleteBtn);
        movieBox.appendChild(viewMovieBtn);
+       movieBox.appendChild(updateMovieBtn);
     }
 
     return movies;
+}
+
+function handleUpdateform(movie){
+    const titleInput = document.getElementById("titleUpdateInput");
+    titleInput.value = movie.title
+    const yearInput = document.getElementById("yearUpdateInput");
+    yearInput.value = movie.year;
+    const directorInput = document.getElementById("directorUpdateInput");
+    directorInput.value = movie.director;
+
+    const updateBtn = document.getElementById('updateBtn');
+    updateBtn.addEventListener('click', async () => {
+        
+    })
 }
 
 //------------To view a specific movie--------------

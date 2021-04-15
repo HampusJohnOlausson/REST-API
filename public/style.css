@@ -44,7 +44,7 @@ button{
     background: #22eaaa;
     margin: auto;
 }
-#editBtn{
+.editBtn{
     background:#9c1de7;
 }
 .hero-title{
@@ -64,13 +64,11 @@ span {
     width: 100%;
     display: flex;
     flex-direction: row;
-    justify-content: space-arounf;
+    justify-content: space-around;
 }
 .movie-container{
-    width: 70%;
     display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
@@ -83,11 +81,10 @@ span {
 .specific-movie{
     display: flex;
     flex-direction: column;
-    width: 50%;
     align-items: center;
 }
 .form-group {
-    margin: 1rem 0rem;
+    margin: .5rem 0rem;
     display: flex;
     flex-direction: column;
 }
@@ -99,4 +96,8 @@ input {
 }
 .title {
     text-align: center;
+}
+form {
+    display: flex;
+    flex-direction: column;
 }
