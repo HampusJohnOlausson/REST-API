@@ -68,7 +68,7 @@ app.delete('/api/movies/:id', (req, res) => {
     const data = JSON.stringify(movies, null, 2);
     fs.writeFile("movieList.json", data, (err) => {
       if (err) throw err;
-      res.status(200).json('was deleted');
+      res.status(200).json('The movie was deleted');
     });
 
 });

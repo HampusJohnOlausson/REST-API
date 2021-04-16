@@ -133,8 +133,6 @@ async function removeMovie(id) {
 //-----------------Update movie------------------
 function handleUpdateform(movie) {
 
-  const idInput = document.getElementById("idUpdateInput"); 
-  idInput.value = movie.id; 
   const titleInput = document.getElementById("titleUpdateInput");
   titleInput.value = movie.title;
   const yearInput = document.getElementById("yearUpdateInput");
@@ -142,29 +140,25 @@ function handleUpdateform(movie) {
   const directorInput = document.getElementById("directorUpdateInput");
   directorInput.value = movie.director;
 
-  const updateSubmit = document.getElementById("update-form");
-  updateSubmit.addEventListener("submit", handleEventUpdate);
+  const updateSubmit = document.getElementById("updateBtn");
+  updateSubmit.addEventListener("click", (e) => {
+      e.preventDefault();
+     const updateTitle = titleInput.value;
+     const updateYear = yearInput.value;
+     const updateDirector = directorInput.value;
+     const id = movie.id
+     updateMovie(updateTitle, updateYear, updateDirector, id);
+  });
 }
 
-function handleEventUpdate(e){
-
-    e.preventDefault();
-    const updateId = document.getElementById("idUpdateInput").value;
-    const updateTitle = document.getElementById("titleUpdateInput").value;
-    const updateYear = document.getElementById("yearUpdateInput").value;
-    const updateDirector = document.getElementById("directorUpdateInput").value;
-    updateMovie(updateTitle, updateYear, updateDirector, updateId);
-};
-
-async function updateMovie(updateTitle, updateYear, updateDirector, updateId) {
-  const updatedMovie = {
-    id: updateId,  
-    title: updateTitle,
-    year: updateYear,
-    director: updateDirector,
+async function updateMovie(title, year, director, id) {
+  const updateMovie = {
+    title: title,
+    year: year,
+    director: director
   };
 
-  const update = await makeRequest("/api/movies" + updatedMovie.id, "PUT", updatedMovie);
+  const update = await makeRequest("/api/movies/" + id, "PUT", updateMovie);
   console.log(update);
 }
 
