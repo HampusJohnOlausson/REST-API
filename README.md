@@ -27,4 +27,5 @@ För att nu kunna starta projektet anävnder du dig utav dessa kommandon:
 Sedan får du gå in på http://localhost:300/api/movies. För att kunna se sidan.
 
 ## Krav som uppfyllts:
+G och VG
 
