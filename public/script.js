@@ -7,41 +7,11 @@ async function main(){
         const allMovies = await getAllMovies();
         console.log(...allMovies);
     })
-
+    
     const newMovieForm = document.getElementById('form');
     newMovieForm.addEventListener('submit', addMovieForm);
 
 }
-
-function addMovieForm(e) {
-  e.preventDefault();
-
-  const titleInput = document.getElementById("title-input");
-  const titleValue = titleInput.value;
-  const yearInput = document.getElementById("year-input");
-  const yearValue = yearInput.value;
-  const directorInput = document.getElementById("director-input");
-  const directorValue = directorInput.value;
-
-  const newMovie = {
-    title: titleValue,
-    year: yearValue,
-    director: directorValue,
-  };
-
-  const { title, year, director } = newMovie;
-  addNewMovie(title, year, director);
-}
-
-async function addNewMovie(title, year, director){
-    const body = { title: title, year: year,  director: director }
-    const movie = await makeRequest('api/movies', 'POST', body);
-    console.log(movieId);
-    return movie;
-}
-
-
-
 
 //----------------To view all Movies--------------------
 async function getAllMovies(){
@@ -102,20 +72,6 @@ async function getAllMovies(){
     return movies;
 }
 
-function handleUpdateform(movie){
-    const titleInput = document.getElementById("titleUpdateInput");
-    titleInput.value = movie.title
-    const yearInput = document.getElementById("yearUpdateInput");
-    yearInput.value = movie.year;
-    const directorInput = document.getElementById("directorUpdateInput");
-    directorInput.value = movie.director;
-
-    const updateBtn = document.getElementById('updateBtn');
-    updateBtn.addEventListener('click', async () => {
-        
-    })
-}
-
 //------------To view a specific movie--------------
 async function getSpecificMovie(id){
 
@@ -140,11 +96,73 @@ async function getSpecificMovie(id){
     return movies;
 }
 
+//--------------add a new movie---------------
+function addMovieForm(e) {
+  e.preventDefault();
+
+  const titleInput = document.getElementById("title-input");
+  const titleValue = titleInput.value;
+  const yearInput = document.getElementById("year-input");
+  const yearValue = yearInput.value;
+  const directorInput = document.getElementById("director-input");
+  const directorValue = directorInput.value;
+
+  const newMovie = {
+    title: titleValue,
+    year: yearValue,
+    director: directorValue,
+  };
+
+  const { title, year, director } = newMovie;
+  addNewMovie(title, year, director);
+}
+
+async function addNewMovie(title, year, director) {
+  const body = { title: title, year: year, director: director };
+  const movie = await makeRequest("api/movies", "POST", body);
+  console.log(movieId);
+  return movie;
+}
+
 //-------------To delete a movie from the list------------
 async function removeMovie(id) {
   const movie = await makeRequest("/api/movies/" + id, 'DELETE');
   return movie;
 }
+
+//-----------------Update movie------------------
+function handleUpdateform(movie) {
+  const titleInput = document.getElementById("titleUpdateInput");
+  titleInput.value = movie.title;
+  const yearInput = document.getElementById("yearUpdateInput");
+  yearInput.value = movie.year;
+  const directorInput = document.getElementById("directorUpdateInput");
+  directorInput.value = movie.director;
+
+  const updateBtn = document.getElementById("updateBtn");
+  updateBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    const id = movie.id;
+    const updateTitle = titleInput.value;
+    const updatetYear = yearInput.value;
+    const updateDirector = directorInput.value;
+
+    updateMovie(updateTitle, updatetYear, updateDirector, id);
+  });
+}
+
+async function updateMovie(id, title, year, director) {
+  const updatedMovie = {
+    title: title,
+    year: year,
+    director: director,
+  };
+
+  const update = await makeRequest("/api/movies" + id, "PUT", updatedMovie);
+  console.log(update);
+}
+
+//-----------make request from server----------------
 
 async function makeRequest(url, method, body){
 

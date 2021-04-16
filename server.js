@@ -59,25 +59,6 @@ app.post('/api/movies', (req, res) => {
 
 });
 
-//-------PUT method (updating a specifik object)-------
-app.put('/api/movies/:id', (req, res) => {
-
-  const movieId = req.params.id;
-  const movie = movies.find((m) => m.id === parseInt(movieId));
-  if (!movie) return res.status(404).send("The movie was not found!");
-
-  // //validation if title exist or not
-  // if (!req.body.title || !req.body.year || !req.body.director)
-  //   return res.status(400).send("Title, year and director of movie is required");
-
-  //updating the movie object  
-  movie.title = req.body.title;
-  movie.year = req.body.year;
-  movie.director = req.body.director;
-  //return the updated object
-  res.send(movie);
-});
-
 //-------DELETE method (delete specifik movie)-------
 app.delete('/api/movies/:id', (req, res) => {
 
@@ -90,6 +71,28 @@ app.delete('/api/movies/:id', (req, res) => {
       res.status(200).json('was deleted');
     });
 
+});
+
+//-------PUT method (updating a specifik object)-------
+app.put('/api/movies/:id', (req, res) => {
+  const movieId = req.params.id;
+  const movie = movies.find((m) => m.id === parseInt(movieId));
+  if (!movie) return res.status(404).send("The movie was not found!");
+
+  //updating the movie object
+  movie.title = req.body.title;
+  movie.year = req.body.year;
+  movie.director = req.body.director;
+
+  const data = JSON.stringify(movies, null, 2);
+  fs.writeFile("movieList.json", data, () => {
+    res.status(200).json({
+      status: "has been updated",
+    });
+  });
+
+  //return the updated object
+  res.json(movie);
 });
 
 //----------Starting the server--------
