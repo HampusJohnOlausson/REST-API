@@ -2,14 +2,20 @@ window.addEventListener('load', main);
 
 async function main(){ 
 
-    const showMoviesBtn = document.getElementById("viewAll");
-    showMoviesBtn.addEventListener('click', async () => {
-        const allMovies = await getAllMovies();
-    })
+    const allMovies = await getAllMovies();
 
     const newMovieForm = document.getElementById('form');
     newMovieForm.addEventListener('submit', addMovieForm);
 
+    const movieContainer = document.getElementById("movieTitle-container");
+    const showMoviesBtn = document.createElement("button");
+    showMoviesBtn.classList.add("viewAll");
+    showMoviesBtn.innerText = "View Updated Movie-list";
+    movieContainer.appendChild(showMoviesBtn);
+    showMoviesBtn.addEventListener("click", async () => {
+      document.location.reload(true);
+      const allMovies = await getAllMovies();
+    });
 }
 
 //----------------To view all Movies--------------------
@@ -40,7 +46,7 @@ async function getAllMovies(){
       deleteBtn.addEventListener('click', async () => {
           const deleteMovie = await removeMovie(movieId);
           movieBox.outerHTML = '';
-          console.log(deleteMovie.id);
+          alert('movie was deleted');
       })
 
       const viewMovieBtn = document.createElement('button');
@@ -48,7 +54,6 @@ async function getAllMovies(){
       viewMovieBtn.innerText = 'View Movie';
       viewMovieBtn.addEventListener('click', async () => {
           const viewMovie = await getSpecificMovie(movieId);
-          console.log(viewMovie.id);
       })
 
       const updateMovieBtn = document.createElement('button');
@@ -56,7 +61,7 @@ async function getAllMovies(){
       updateMovieBtn.innerText = 'Edit';
       updateMovieBtn.addEventListener('click', async () => {
           const updateMovie = await handleUpdateform(movieId);
-          console.log(updateMovie.id);
+          
       })
 
       const movieContainer = document.getElementById("movie-container");
@@ -98,6 +103,7 @@ async function getSpecificMovie(id){
 
 //--------------add a new movie---------------
 function addMovieForm(e) {
+    alert("movie was added");
   e.preventDefault();
 
   const titleInput = document.getElementById("title-input");
@@ -120,7 +126,6 @@ function addMovieForm(e) {
 async function addNewMovie(title, year, director) {
   const body = { title: title, year: year, director: director };
   const movie = await makeRequest("api/movies", "POST", body);
-  console.log(movieId);
   return movie;
 }
 
@@ -143,16 +148,18 @@ async function handleUpdateform(id) {
   directorInput.value = movies.director;
   const movieId = movies.id;
 
+
   const updateSubmit = document.getElementById("updateBtn");
   updateSubmit.addEventListener("click", (e) => {
+
       e.preventDefault();
      const updateTitle = titleInput.value;
      const updateYear = yearInput.value;
      const updateDirector = directorInput.value;
      const id = movieId;
      updateMovie(updateTitle, updateYear, updateDirector, id);
+     alert("the movie was updated");
 
-     
   });
 }
 
