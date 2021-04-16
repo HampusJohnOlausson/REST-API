@@ -7,7 +7,7 @@ async function main(){
         const allMovies = await getAllMovies();
         console.log(...allMovies);
     })
-    
+
     const newMovieForm = document.getElementById('form');
     newMovieForm.addEventListener('submit', addMovieForm);
 
@@ -132,6 +132,9 @@ async function removeMovie(id) {
 
 //-----------------Update movie------------------
 function handleUpdateform(movie) {
+
+  const idInput = document.getElementById("idUpdateInput"); 
+  idInput.value = movie.id; 
   const titleInput = document.getElementById("titleUpdateInput");
   titleInput.value = movie.title;
   const yearInput = document.getElementById("yearUpdateInput");
@@ -139,26 +142,29 @@ function handleUpdateform(movie) {
   const directorInput = document.getElementById("directorUpdateInput");
   directorInput.value = movie.director;
 
-  const updateBtn = document.getElementById("updateBtn");
-  updateBtn.addEventListener("click", (e) => {
-    e.preventDefault();
-    const id = movie.id;
-    const updateTitle = titleInput.value;
-    const updatetYear = yearInput.value;
-    const updateDirector = directorInput.value;
-
-    updateMovie(updateTitle, updatetYear, updateDirector, id);
-  });
+  const updateSubmit = document.getElementById("update-form");
+  updateSubmit.addEventListener("submit", handleEventUpdate);
 }
 
-async function updateMovie(id, title, year, director) {
+function handleEventUpdate(e){
+
+    e.preventDefault();
+    const updateId = document.getElementById("idUpdateInput").value;
+    const updateTitle = document.getElementById("titleUpdateInput").value;
+    const updateYear = document.getElementById("yearUpdateInput").value;
+    const updateDirector = document.getElementById("directorUpdateInput").value;
+    updateMovie(updateTitle, updateYear, updateDirector, updateId);
+};
+
+async function updateMovie(updateTitle, updateYear, updateDirector, updateId) {
   const updatedMovie = {
-    title: title,
-    year: year,
-    director: director,
+    id: updateId,  
+    title: updateTitle,
+    year: updateYear,
+    director: updateDirector,
   };
 
-  const update = await makeRequest("/api/movies" + id, "PUT", updatedMovie);
+  const update = await makeRequest("/api/movies" + updatedMovie.id, "PUT", updatedMovie);
   console.log(update);
 }
 

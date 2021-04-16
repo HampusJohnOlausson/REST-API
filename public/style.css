@@ -12,6 +12,13 @@ body{
     flex-direction: column;
     align-items: center;
 }
+.first-container {
+    width: 30%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin-bottom: 2rem;
+}
 .movieBox{
     border: 3px solid #28c7fa;
     border-radius: .5rem;
@@ -38,11 +45,10 @@ button{
 }
 #viewAll{
     background:#28c7fa;
-    margin: auto;
+    
 }
 #submitBtn{
     background: #22eaaa;
-    margin: auto;
 }
 .editBtn{
     background:#9c1de7;
@@ -61,14 +67,12 @@ span {
     justify-content: space-around;
 }
 .main-container{
-    width: 100%;
     display: flex;
-    flex-direction: row;
-    justify-content: space-around;
 }
 .movie-container{
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap: wrap;
     justify-content: center;
     align-items: center;
 }
@@ -76,11 +80,22 @@ span {
     border: 3px solid #28c7fa;
     border-radius: .5rem;
     padding: 1rem;
+    display: flex;
+    flex-direction: column;
     text-align: center;
 }
 .specific-movie{
+    width: 100rem;
+    margin: 0rem 6rem;
     display: flex;
     flex-direction: column;
+    align-items: center
+}
+.movieTitle-container{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
 }
 .form-group {
@@ -100,4 +115,6 @@ input {
 form {
     display: flex;
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }

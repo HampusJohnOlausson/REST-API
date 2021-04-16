@@ -1,6 +1,6 @@
 # Laboration 1 - REST-API
 
-I denna laboration så kan man hämta ett flertal objekt som i detta fallet är filmer och dess utgiviningsår, regissör och id.
+I denna laboration så kan man hämta ett flertal objekt som i detta fallet är filmer och dess utgiviningsår, regissör och id. Projektet är byggt med express.js och innehåller olika endpoints såsom GET, POST, PUT, DELETE. 
 
 # Starta projektet 
 

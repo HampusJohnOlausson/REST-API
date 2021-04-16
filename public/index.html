@@ -10,7 +10,8 @@
 </head>
 <body>
     <h1 class="hero-title">Welcome to <span>MovieZone</span></h1>
-    <form action="/api/movies" method="POST" class="form" id="form">
+    <div class="first-container">
+    <form action="" method="POST" class="formUpdate" id="form">
         <h2>Add a new movie</h2>
         <div class="form-group">
             <label for="title">Title:</label>
@@ -28,19 +29,13 @@
              <button id="submitBtn">Submit</button>
         </div>
     </form>
-
-    <div class="main-container">
-    <div class="movie-container" id="movie-container">
-        <div class="categories"> 
-        <h2 class="title">List of movies</h2>
-        <button class="button" id="viewAll">Show all movies</button>
-        </div>
-    </div>
     <div class="specific-movie" id="specific-movie">
-        <h2 class="title">Choosen movie</h2>
+    <h2 class="title">Choosen movie</h2>
     </div>
-     <form action="" id="update-form" class="form">
+
+     <form action="/api/movies" method="PUT" id="update-form" class="form">
          <h2 class="title">Edit movie</h2>
+                
             <div class="form-group">
                 <label for="title">Title:</label>
                 <input type="text" id="titleUpdateInput"/>
@@ -55,6 +50,16 @@
             </div>
             <button class="editBtn" id="updateBtn">Update</button>
         </form>
+       </div>
+    <div class="main-container">
+    <div class="movie-container" id="movie-container">
+        <div class="movieTitle-container">
+        <h2 class="title">List of movies</h2>
+        <button class="button" id="viewAll">Show all movies</button>
+        </div>
+        <div class="categories"> 
+        </div>
+    </div>
     </div>
 </body>
 </html>

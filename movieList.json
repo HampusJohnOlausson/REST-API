@@ -1,14 +1,8 @@
 [
   {
-    "id": 1,
-    "title": "Purple Valentine",
-    "year": 2001,
-    "director": "Gordan Ramsey"
-  },
-  {
-    "id": 3,
-    "title": "Fellowship of the ring",
-    "year": 2001,
-    "director": "Peter Jackson"
+    "id": 2,
+    "title": "hello",
+    "year": "11",
+    "director": "sasasasa"
   }
 ]
