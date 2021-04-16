@@ -5,7 +5,6 @@ async function main(){
     const showMoviesBtn = document.getElementById("viewAll");
     showMoviesBtn.addEventListener('click', async () => {
         const allMovies = await getAllMovies();
-        console.log(...allMovies);
     })
 
     const newMovieForm = document.getElementById('form');
@@ -55,8 +54,9 @@ async function getAllMovies(){
       const updateMovieBtn = document.createElement('button');
       updateMovieBtn.classList.add('editBtn');
       updateMovieBtn.innerText = 'Edit';
-      updateMovieBtn.addEventListener('click',() => {
-          handleUpdateform(movie);
+      updateMovieBtn.addEventListener('click', async () => {
+          const updateMovie = await handleUpdateform(movieId);
+          console.log(updateMovie.id);
       })
 
       const movieContainer = document.getElementById("movie-container");
@@ -131,14 +131,17 @@ async function removeMovie(id) {
 }
 
 //-----------------Update movie------------------
-function handleUpdateform(movie) {
+async function handleUpdateform(id) {
 
+  const movies = await makeRequest("/api/movies/" + id, "GET");
+  console.log(movies);
   const titleInput = document.getElementById("titleUpdateInput");
-  titleInput.value = movie.title;
+  titleInput.value = movies.title;
   const yearInput = document.getElementById("yearUpdateInput");
-  yearInput.value = movie.year;
+  yearInput.value = movies.year;
   const directorInput = document.getElementById("directorUpdateInput");
-  directorInput.value = movie.director;
+  directorInput.value = movies.director;
+  const movieId = movies.id;
 
   const updateSubmit = document.getElementById("updateBtn");
   updateSubmit.addEventListener("click", (e) => {
@@ -146,13 +149,16 @@ function handleUpdateform(movie) {
      const updateTitle = titleInput.value;
      const updateYear = yearInput.value;
      const updateDirector = directorInput.value;
-     const id = movie.id
+     const id = movieId;
      updateMovie(updateTitle, updateYear, updateDirector, id);
+
+     
   });
 }
 
 async function updateMovie(title, year, director, id) {
   const updateMovie = {
+    id: id,
     title: title,
     year: year,
     director: director
